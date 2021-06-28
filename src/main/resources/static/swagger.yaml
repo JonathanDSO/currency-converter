@@ -1,0 +1,106 @@
+swagger: "2.0"
+info:
+  description: "Currency converter API."
+  version: "1.0.0"
+  title: "Currency converter API"
+  contact:
+    email: "jonathanso@outlook.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: "CurrencyConverter"
+paths:
+  /currency-converter:
+    get:
+      tags:
+        - "CurrencyConverter"
+      summary: "List all Transactions."
+      operationId: "findAll"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "page"
+          description: "Result Page Number"
+        - in: "query"
+          name: "size"
+          description: "Result Page Size"
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: "Failed to process"
+    post:
+      tags:
+        - "CurrencyConverter"
+      summary: "Convert the currency amount and record the transaction."
+      operationId: "insert"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Data to perform the conversion."
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionRequestVO"
+      responses:
+        "201":
+          description: "Successful operation"
+        "400":
+          description: "Failed to process"
+definitions:
+   TransactionRequestVO:
+    type: object
+    description: >-
+      Transaction request.
+    properties:
+      userId:
+        description: User ID
+        type: integer
+      sourceCurrency:
+        description: Source currency.
+        type: string
+        enum: [BRL, USD, EUR, JPY]
+      sourceValue:
+        description: Source value.
+        type: number
+        format: double
+      targetCurrency:
+        description: Target currency.
+        type: string
+        enum: [BRL, USD, EUR, JPY]
+   TransactionResponseVO:
+    type: object
+    description: >-
+      Transaction response.
+    properties:
+      transactionId:
+        description: Transaction ID
+        type: integer
+      userId:
+        description: User ID
+        type: integer
+      sourceCurrency:
+        description: Source currency.
+        type: string
+        enum: [BRL, USD, EUR, JPY]
+      sourceValue:
+        description: Source value.
+        type: number
+        format: double
+      targetCurrency:
+        description: Target currency.
+        type: string
+        enum: [BRL, USD, EUR, JPY]
+      targetValue:
+        description: Source value.
+        type: number
+        format: double
+      date:
+        description: Transaction date.
+        type: string
+        format: date

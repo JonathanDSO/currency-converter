@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  currency-converter:
+    image: currency-converter
+    restart: always
+    build: .
+    working_dir: /currency-converter
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_BOOT_ENVIRONMENT: Production
+    ports:
+      - "8080:8080"
+    command: mvn spring-boot:run
+    networks:
+      - currency-converter-network
+networks:
+    currency-converter-network:
+        driver: bridge
