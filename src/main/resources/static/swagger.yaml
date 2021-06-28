@@ -35,7 +35,7 @@ paths:
       tags:
         - "CurrencyConverter"
       summary: "Convert the currency amount and record the transaction."
-      operationId: "insert"
+      operationId: "convertCurrency"
       consumes:
         - "application/json"
       produces:

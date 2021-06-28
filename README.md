@@ -9,26 +9,16 @@ https://github.com/JonathanDSO/currency-converter/wiki
 ## Como executar
 
 - Clone este repositório
-- Executar por docker ou por jar.
-
-### Via docker
-
-Ter instalado o docker.
-Construir e subir a imagem docker, através do comando:
-`docker-compose up -d --build`
-
-### Via jar
-Você o executa usando o comando `java -jar`.
-
+- Crie um arquivo na raiz do projeto chamado 'web-variables.env'.
+- Neste arquivo, deve conter o parametro: 
+`URL_EXCHANGE_RATES_API=http://api.exchangeratesapi.io/v1/latest?access_key=[SEU ACCESS_KEY]`
+- Substitua o "[SEU ACCESS_KEY]" pelo seu "access_key" da API exchangeratesapi.
 - Certifique-se de usar JDK 11 e Maven 3.x
 - Você pode construir o projeto e executar os testes executando `mvn clean package`
-- Depois de construído com sucesso, você pode executar o serviço por um destes dois métodos:
+- Ter instalado e iniciado o docker.
+- Construir e subir a imagem docker, através do comando:
+`docker-compose up -d --build`
 
-```
-         java -jar currency-converter-0.0.1-SNAPSHOT.jar
-ou
-         mvn spring-boot:run
-```
 
 Depois que o aplicativo for executado, você deve ver algo assim
 

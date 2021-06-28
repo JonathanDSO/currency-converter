@@ -8,6 +8,8 @@ services:
     environment:
       TZ: America/Sao_Paulo
       SPRING_BOOT_ENVIRONMENT: Production
+    env_file:
+      - web-variables.env
     ports:
       - "8080:8080"
     command: mvn spring-boot:run
