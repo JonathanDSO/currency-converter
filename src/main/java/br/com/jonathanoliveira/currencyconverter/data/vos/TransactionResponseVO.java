@@ -17,8 +17,8 @@ public class TransactionResponseVO {
 	private CurrencyEnum targetCurrency;
 	private Double targetValue;
 	private Double conversionRateUsed;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date date;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+	private Date dateTime;
 
 	public Double getTargetValue() {
 		targetValue = sourceValue * conversionRateUsed;

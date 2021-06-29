@@ -1,6 +1,7 @@
 package br.com.jonathanoliveira.currencyconverter.facades;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.sql.Timestamp;
@@ -47,9 +48,9 @@ public class CurrencyConverterFacadeTest {
 	public void convertCurrency() throws ParseException {
 		TransactionRequestVO transactionRequestVO = new TransactionRequestVO();
 		when(transactionService.save(ArgumentMatchers.any())).thenReturn(payload_Transaction());
-		when(exchangeRatesService.searchExchangeRates(ArgumentMatchers.any(), ArgumentMatchers.any()))
+		when(exchangeRatesService.searchExchangeRates(any(String.class), ArgumentMatchers.any(), ArgumentMatchers.any()))
 				.thenReturn(payload_ExchangeRatesResponseVO());
-		TransactionResponseVO result = currencyConverterFacade.convertCurrency(transactionRequestVO);
+		TransactionResponseVO result = currencyConverterFacade.convertCurrency("accessKey", transactionRequestVO);
 		assertEquals(payload_TransactionResponseVO(), result);
 	}
 
@@ -74,7 +75,7 @@ public class CurrencyConverterFacadeTest {
 		transactionResponseVO.setTargetCurrency(CurrencyEnum.BRL);
 		transactionResponseVO.setConversionRateUsed(5.904754);
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-		transactionResponseVO.setDate(f.parse("28/06/2021"));
+		transactionResponseVO.setDateTime(f.parse("28/06/2021"));
 		return transactionResponseVO;
 	}
 
@@ -87,7 +88,7 @@ public class CurrencyConverterFacadeTest {
 		transaction.setTargetCurrency(CurrencyEnum.BRL);
 		transaction.setConversionRateUsed(5.904754);
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-		transaction.setDate(f.parse("28/06/2021"));
+		transaction.setDateTime(f.parse("28/06/2021"));
 		return transaction;
 	}
 

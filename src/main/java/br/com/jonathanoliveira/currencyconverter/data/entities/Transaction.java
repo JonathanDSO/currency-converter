@@ -42,7 +42,7 @@ public class Transaction {
 	private Double conversionRateUsed;
 
 	@CreationTimestamp
-	@Column(name = "date", nullable = false)
-	private Date date;
+	@Column(name = "date_time", nullable = false)
+	private Date dateTime;
 
 }

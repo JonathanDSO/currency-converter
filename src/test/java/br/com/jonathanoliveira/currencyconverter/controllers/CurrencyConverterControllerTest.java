@@ -39,9 +39,9 @@ public class CurrencyConverterControllerTest extends AbstractTest {
 
 	@Test
 	public void convertCurrency() throws Exception {
-		String uri = "/currency-converter";
+		String uri = "/currency-converter?accessKey=accessKey";
 		String inputJson = super.mapToJson(payload_TransactionRequestVO());
-		when(currencyConverterFacade.convertCurrency(any(TransactionRequestVO.class)))
+		when(currencyConverterFacade.convertCurrency(any(String.class), any(TransactionRequestVO.class)))
 				.thenReturn(payload_TransactionResponseVO());
 
 		MvcResult mvcResult = mvc.perform(
@@ -67,7 +67,7 @@ public class CurrencyConverterControllerTest extends AbstractTest {
 	public void convertCurrency_Bad_Request() throws Exception {
 		String uri = "/currency-converter";
 		Transaction transaction = new Transaction();
-		transaction.setDate(new Date());
+		transaction.setDateTime(new Date());
 		String inputJson = super.mapToJson(transaction);
 
 		MvcResult mvcResult = mvc.perform(
@@ -116,7 +116,7 @@ public class CurrencyConverterControllerTest extends AbstractTest {
 		transactionResponseVO.setTargetCurrency(CurrencyEnum.BRL);
 		transactionResponseVO.setConversionRateUsed(5.904754);
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-		transactionResponseVO.setDate(f.parse("28/06/2021"));
+		transactionResponseVO.setDateTime(f.parse("28/06/2021"));
 		return transactionResponseVO;
 	}
 

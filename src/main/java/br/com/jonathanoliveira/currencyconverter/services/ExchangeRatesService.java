@@ -20,10 +20,11 @@ public class ExchangeRatesService {
 
 	private final RestTemplate restTemplate;
 
-	public ExchangeRatesResponseVO searchExchangeRates(CurrencyEnum sourceCurrency, CurrencyEnum targetCurrency) {
+	public ExchangeRatesResponseVO searchExchangeRates(String accesskey, CurrencyEnum sourceCurrency, CurrencyEnum targetCurrency) {
 		ParameterizedTypeReference<ExchangeRatesResponseVO> responseType = new ParameterizedTypeReference<ExchangeRatesResponseVO>() {};
 		ResponseEntity<ExchangeRatesResponseVO> response = restTemplate.exchange(
-				urlExchangeRatesAPI + 
+				urlExchangeRatesAPI +
+				"?access_key="+ accesskey + 
 				"&base=" + sourceCurrency + 
 				"&symbols=" + targetCurrency, 
 				HttpMethod.GET, null,

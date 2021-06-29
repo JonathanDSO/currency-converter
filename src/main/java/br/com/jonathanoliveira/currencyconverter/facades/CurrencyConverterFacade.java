@@ -24,11 +24,11 @@ public class CurrencyConverterFacade {
 
 	private static final String TRANSACTION_REQUEST_VO_CANNOT_BE_NULL = "transactionRequestVO cannot be null";
 
-	public TransactionResponseVO convertCurrency(TransactionRequestVO transactionRequestVO) {
+	public TransactionResponseVO convertCurrency(String accesskey, TransactionRequestVO transactionRequestVO) {
 		Assert.notNull(transactionRequestVO, TRANSACTION_REQUEST_VO_CANNOT_BE_NULL);
 		Transaction transaction = DozerConverter.parseObject(transactionRequestVO, Transaction.class);
-		ExchangeRatesResponseVO exchangeRatesResponseVO = exchangeRatesService
-				.searchExchangeRates(transaction.getSourceCurrency(), transaction.getTargetCurrency());
+		ExchangeRatesResponseVO exchangeRatesResponseVO = exchangeRatesService.searchExchangeRates(accesskey,
+				transaction.getSourceCurrency(), transaction.getTargetCurrency());
 		transaction.setConversionRateUsed(exchangeRatesResponseVO.getRates().get(transaction.getTargetCurrency()));
 		Transaction transactionSaved = transactionService.save(transaction);
 		return DozerConverter.parseObject(transactionSaved, TransactionResponseVO.class);

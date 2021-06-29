@@ -23,9 +23,13 @@ paths:
         - in: "query"
           name: "page"
           description: "Result Page Number"
+          schema:
+            type: integer
         - in: "query"
           name: "size"
           description: "Result Page Size"
+          schema:
+            type: integer
       responses:
         "200":
           description: "Successful operation"
@@ -41,6 +45,12 @@ paths:
       produces:
         - "application/json"
       parameters:
+        - in: "query"
+          name: "accessKey"
+          description: "Exchange Rates API Access Key"
+          required: true
+          schema:
+            type: string
         - in: "body"
           name: "body"
           description: "Data to perform the conversion."
@@ -100,7 +110,7 @@ definitions:
         description: Source value.
         type: number
         format: double
-      date:
+      dateTime:
         description: Transaction date.
         type: string
         format: date

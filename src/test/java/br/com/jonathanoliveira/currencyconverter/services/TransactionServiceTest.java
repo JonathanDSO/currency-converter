@@ -71,7 +71,7 @@ public class TransactionServiceTest {
 		transaction.setTargetCurrency(CurrencyEnum.BRL);
 		transaction.setConversionRateUsed(5.904754);
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-		transaction.setDate(f.parse("28/06/2021"));
+		transaction.setDateTime(f.parse("28/06/2021"));
 		return transaction;
 	}
 
