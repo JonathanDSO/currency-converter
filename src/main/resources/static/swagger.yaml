@@ -45,12 +45,6 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - in: "query"
-          name: "accessKey"
-          description: "Exchange Rates API Access Key"
-          required: true
-          schema:
-            type: string
         - in: "body"
           name: "body"
           description: "Data to perform the conversion."
@@ -68,6 +62,9 @@ definitions:
     description: >-
       Transaction request.
     properties:
+      accessKey:
+        description: Exchange Rates Access Key
+        type: string
       userId:
         description: User ID
         type: integer

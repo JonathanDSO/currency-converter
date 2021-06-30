@@ -14,9 +14,11 @@ import br.com.jonathanoliveira.currencyconverter.data.vos.TransactionResponseVO;
 import br.com.jonathanoliveira.currencyconverter.services.ExchangeRatesService;
 import br.com.jonathanoliveira.currencyconverter.services.TransactionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CurrencyConverterFacade {
 	private final TransactionService transactionService;
 
@@ -24,17 +26,19 @@ public class CurrencyConverterFacade {
 
 	private static final String TRANSACTION_REQUEST_VO_CANNOT_BE_NULL = "transactionRequestVO cannot be null";
 
-	public TransactionResponseVO convertCurrency(String accesskey, TransactionRequestVO transactionRequestVO) {
+	public TransactionResponseVO convertCurrency(TransactionRequestVO transactionRequestVO) {
+		log.info("CurrencyConverterFacade.convertCurrency");
 		Assert.notNull(transactionRequestVO, TRANSACTION_REQUEST_VO_CANNOT_BE_NULL);
 		Transaction transaction = DozerConverter.parseObject(transactionRequestVO, Transaction.class);
-		ExchangeRatesResponseVO exchangeRatesResponseVO = exchangeRatesService.searchExchangeRates(accesskey,
-				transaction.getSourceCurrency(), transaction.getTargetCurrency());
+		ExchangeRatesResponseVO exchangeRatesResponseVO = exchangeRatesService.searchExchangeRates(
+				transactionRequestVO.getAccessKey(), transaction.getSourceCurrency(), transaction.getTargetCurrency());
 		transaction.setConversionRateUsed(exchangeRatesResponseVO.getRates().get(transaction.getTargetCurrency()));
 		Transaction transactionSaved = transactionService.save(transaction);
 		return DozerConverter.parseObject(transactionSaved, TransactionResponseVO.class);
 	}
 
 	public List<TransactionResponseVO> findAll(Pageable pageable) {
+		log.info("CurrencyConverterFacade.findAll");
 		return DozerConverter.parseListObject(transactionService.findAll(pageable), TransactionResponseVO.class);
 	}
 

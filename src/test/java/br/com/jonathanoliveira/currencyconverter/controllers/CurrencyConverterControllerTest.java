@@ -41,7 +41,7 @@ public class CurrencyConverterControllerTest extends AbstractTest {
 	public void convertCurrency() throws Exception {
 		String uri = "/currency-converter?accessKey=accessKey";
 		String inputJson = super.mapToJson(payload_TransactionRequestVO());
-		when(currencyConverterFacade.convertCurrency(any(String.class), any(TransactionRequestVO.class)))
+		when(currencyConverterFacade.convertCurrency(any(TransactionRequestVO.class)))
 				.thenReturn(payload_TransactionResponseVO());
 
 		MvcResult mvcResult = mvc.perform(
@@ -106,7 +106,7 @@ public class CurrencyConverterControllerTest extends AbstractTest {
 		transactionRequestVO.setTargetCurrency(CurrencyEnum.BRL);
 		return transactionRequestVO;
 	}
-	
+
 	private TransactionResponseVO payload_TransactionResponseVO() throws ParseException {
 		final TransactionResponseVO transactionResponseVO = new TransactionResponseVO();
 		transactionResponseVO.setTransactionId(1);

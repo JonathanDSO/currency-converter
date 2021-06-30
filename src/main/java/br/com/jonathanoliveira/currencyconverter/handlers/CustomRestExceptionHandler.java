@@ -17,13 +17,17 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
 @ControllerAdvice
 @RestController
+@Slf4j
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		log.error("CustomRestExceptionHandler.handleMethodArgumentNotValid");
 		List<ApiSubError> apiSubErrors = new ArrayList<>();
 		for (FieldError error : ex.getBindingResult().getFieldErrors()) {
 			String object = ex.getParameter().getParameterType().getSimpleName();
@@ -45,12 +49,14 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		log.error("CustomRestExceptionHandler.handleHttpMessageNotReadable");
 		String error = "Malformed JSON request";
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
 	}
 
 	@ExceptionHandler(HttpClientErrorException.class)
 	protected ResponseEntity<Object> handleHttpClientErrorException(HttpClientErrorException ex) {
+		log.error("CustomRestExceptionHandler.handleHttpClientErrorException");
 		ApiError apiError = new ApiError(ex.getStatusCode());
 		apiError.setMessage(ex.getMessage());
 		return buildResponseEntity(apiError);
@@ -58,6 +64,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	protected ResponseEntity<Object> illegalArgumentException(IllegalArgumentException ex) {
+		log.error("CustomRestExceptionHandler.illegalArgumentException");
 		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 		apiError.setMessage(ex.getMessage());
 		return buildResponseEntity(apiError);

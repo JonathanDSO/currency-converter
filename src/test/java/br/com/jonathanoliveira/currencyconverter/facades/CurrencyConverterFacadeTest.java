@@ -48,9 +48,9 @@ public class CurrencyConverterFacadeTest {
 	public void convertCurrency() throws ParseException {
 		TransactionRequestVO transactionRequestVO = new TransactionRequestVO();
 		when(transactionService.save(ArgumentMatchers.any())).thenReturn(payload_Transaction());
-		when(exchangeRatesService.searchExchangeRates(any(String.class), ArgumentMatchers.any(), ArgumentMatchers.any()))
-				.thenReturn(payload_ExchangeRatesResponseVO());
-		TransactionResponseVO result = currencyConverterFacade.convertCurrency("accessKey", transactionRequestVO);
+		when(exchangeRatesService.searchExchangeRates(any(String.class), ArgumentMatchers.any(),
+				ArgumentMatchers.any())).thenReturn(payload_ExchangeRatesResponseVO());
+		TransactionResponseVO result = currencyConverterFacade.convertCurrency(transactionRequestVO);
 		assertEquals(payload_TransactionResponseVO(), result);
 	}
 
